@@ -1,6 +1,6 @@
 import personAPI from '../services/persons'
 
-const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNewNumber, setSuccessMsg }) => {
+const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNewNumber, setSuccessMsg, setErrorMsg }) => {
   const createPerson = (person) => {
     personAPI.create(person).then(createdPerson => {
       setPersons(persons.concat(createdPerson))
@@ -19,14 +19,20 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
 
     personAPI.update(id, newPerson).then(returnedPerson => {
       setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
-      setNewName('')
-      setNewNumber('')
 
       setSuccessMsg(`Updated ${newPerson.name}`)
       setTimeout(() => {
         setSuccessMsg(null)
       }, 2000)
+    }).catch(error => {
+      setErrorMsg(`Information of ${newPerson.name} has already been removed from the server`)
+      setTimeout(() => {
+        setErrorMsg(null)
+      }, 2000)
     })
+
+    setNewName('')
+    setNewNumber('')
   }
 
   const addName = (event) => {

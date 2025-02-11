@@ -3,6 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Notification from './components/Notification'
+import Error from './components/Error'
 import personAPI from './services/persons'
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [successMsg, setSuccessMsg] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null)
 
   useEffect(() => {
     personAPI.getAll()
@@ -23,9 +25,10 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={successMsg} />
+      <Error message={errorMsg} />
       <Filter filter={filter} setFilter={setFilter} />
       <h3>add a new</h3>
-      <PersonForm persons={persons} setPersons={setPersons} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} setSuccessMsg={setSuccessMsg} />
+      <PersonForm persons={persons} setPersons={setPersons} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} />
       <h3>Numbers</h3>
       <Persons persons={persons} setPersons={setPersons} filter={filter} setSuccessMsg={setSuccessMsg} />
     </div>
