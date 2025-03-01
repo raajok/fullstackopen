@@ -113,6 +113,41 @@ test('blog with no url returns 400', async () => {
   assert.strictEqual(response.body.length, initialBlogs.length)
 })
 
+test('deleting a blog', async () => {
+  const blogsInDb = await api
+    .get('/api/blogs')
+
+  const blogToDelete = blogsInDb.body[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+  const response = await api.get('/api/blogs')
+  const blogs = response.body
+
+  assert.strictEqual(blogs.length, initialBlogs.length - 1)
+  assert(!blogs.map(blog => blog.title).includes(blogToDelete.title))
+})
+
+test('updating a blog', async () => {
+  const blogsInDb = await api
+    .get('/api/blogs')
+
+  const blogToUpdate = blogsInDb.body[0]
+  const updatedBlog = { ...blogToUpdate, likes: (blogToUpdate.likes + 1) }
+
+  await api.put(`/api/blogs/${blogToUpdate.id}`)
+    .send(updatedBlog)
+    .expect(200)
+
+  const response = await api.get('/api/blogs')
+  const blogs = response.body
+
+  assert.strictEqual(blogs.length, initialBlogs.length)
+  assert(blogs.map(blog => blog.likes).includes(updatedBlog.likes))
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
