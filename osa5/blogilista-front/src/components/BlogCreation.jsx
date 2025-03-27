@@ -1,12 +1,11 @@
 import { useState } from "react"
-import blogService from "../services/blogs"
 
-export default function BlogCreation({ user, bloglist, setBloglist, setSuccess }) {
-  const [title, setTitle] = useState()
-  const [author, setAuthor] = useState()
-  const [url, setUrl] = useState()
+export default function BlogCreation({ handleCreate }) {
+  const [title, setTitle] = useState("")
+  const [author, setAuthor] = useState("")
+  const [url, setUrl] = useState("")
 
-  const handleCreate = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
     setTitle('')
@@ -16,23 +15,16 @@ export default function BlogCreation({ user, bloglist, setBloglist, setSuccess }
     const blog = {
       title: title,
       author: author,
-      url: url,
-      user: user
+      url: url
     }
 
-    await blogService.create(blog)
-
-    setBloglist(bloglist.concat(blog))
-    setSuccess(`a new blog ${title} by ${author} added`)
-    setTimeout(() => {
-      setSuccess(null)
-    }, 5000)
+    handleCreate(blog)
   }
 
   return (
     <div>
       <h1>create new</h1>
-      <form onSubmit={(e) => handleCreate(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           title:
           <input 
