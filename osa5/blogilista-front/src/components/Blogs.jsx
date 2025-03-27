@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Blog from "./Blog";
+import Blog from './Blog'
 import blogService from '../services/blogs'
 import BlogCreation from './BlogCreation'
 import Togglable from './Togglable'
@@ -12,7 +12,7 @@ export default function Blogs({ user, setUser }) {
   useEffect(() => {
     blogService.getAll().then(response =>
       setBloglist(response.sort((a, b) => b.likes - a.likes))
-    )  
+    )
   }, [])
 
   const handleCreate = async (blog) => {
@@ -33,25 +33,25 @@ export default function Blogs({ user, setUser }) {
       .then(returnedBlog => {
         setBloglist(
           bloglist.map(blog => blog.id !== likedBlog.id ? blog : returnedBlog)
-          .toSorted((a, b) => b.likes - a.likes))
+            .toSorted((a, b) => b.likes - a.likes))
       })
   }
 
   const handleRemove = async (removedBlog) => {
     if (window.confirm(`Remove blog ${removedBlog.title} by ${removedBlog.author}`)) {
       blogService
-      .remove(removedBlog.id)
-      .then(() => {
-        setBloglist(bloglist.filter(blog => blog.id !== removedBlog.id))
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .remove(removedBlog.id)
+        .then(() => {
+          setBloglist(bloglist.filter(blog => blog.id !== removedBlog.id))
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 
   const handleLogout = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     setUser(null)
     window.localStorage.removeItem('loggedUser')

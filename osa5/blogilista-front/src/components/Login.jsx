@@ -9,7 +9,7 @@ export default function Login({ setUser }) {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -34,13 +34,13 @@ export default function Login({ setUser }) {
     <div>
       <h2>log in to application</h2>
       {
-        errorMessage && 
+        errorMessage &&
         <p>{errorMessage}</p>
       }
       <form onSubmit={(e) => handleLogin(e)}>
         <div>
           username
-          <input 
+          <input
             type='text'
             value={username}
             name='Username'
@@ -49,7 +49,7 @@ export default function Login({ setUser }) {
         </div>
         <div>
           password
-          <input 
+          <input
             type='password'
             value={password}
             name='Password'

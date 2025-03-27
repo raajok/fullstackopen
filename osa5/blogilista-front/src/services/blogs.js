@@ -26,7 +26,7 @@ const like = async blog => {
     headers: { Authorization: token },
   }
 
-  const newBlog = {...blog, likes: (blog.likes + 1), user: blog.user.id}
+  const newBlog = { ...blog, likes: (blog.likes + 1), user: blog.user.id }
 
   const response = await axios.put(baseUrl.concat(`/${blog.id}`), newBlog, config)
   return response.data

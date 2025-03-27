@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const blogStyle = {
   paddingTop: 10,
@@ -33,6 +34,13 @@ const Blog = ({ username, handleRemove, handleLike, blog }) => {
       <button onClick={() => setShowAll(true)}>view</button>
     </div>
   )
+}
+
+Blog.propTypes = {
+  username: PropTypes.string.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  blog: PropTypes.object.isRequired
 }
 
 export default Blog
