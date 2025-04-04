@@ -24,7 +24,7 @@ router.post('/', userExtractor, async (request, response) => {
     return response.status(400).json({ error: 'title or url missing' })
   }   
 
-  blog.likes = blog.likes | 0
+  blog.likes = blog.likes || 0
   blog.user = user
   user.blogs = user.blogs.concat(blog._id)
 

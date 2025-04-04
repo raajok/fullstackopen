@@ -18,10 +18,10 @@ export default function Blogs({ user, setUser }) {
   const handleCreate = async (blog) => {
     blogCreationRef.current.toggleVisibility()
     blog.user = user
-    await blogService.create(blog)
+    const returnedBlog = await blogService.create(blog)
 
-    setBloglist(bloglist.concat(blog).toSorted((a, b) => b.likes - a.likes))
-    setSuccess(`a new blog ${blog.title} by ${blog.author} added`)
+    setBloglist(bloglist.concat(returnedBlog).toSorted((a, b) => b.likes - a.likes))
+    setSuccess(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
     setTimeout(() => {
       setSuccess(null)
     }, 5000)

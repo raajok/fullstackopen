@@ -29,7 +29,7 @@ const Blog = ({ username, handleRemove, handleLike, blog }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div data-testid='blog' style={blogStyle}>
       {blog.title} {blog.author}
       <button onClick={() => setShowAll(true)}>view</button>
     </div>
