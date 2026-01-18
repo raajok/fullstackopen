@@ -21,7 +21,6 @@ const useCountry = (name) => {
   useEffect(() => {
     const request = axios.get(`https://studies.cs.helsinki.fi/restcountries/api/name/${name}`)
     request.then(response => {
-      console.log(response)
       setCountry({
         found: true,
         data: {
