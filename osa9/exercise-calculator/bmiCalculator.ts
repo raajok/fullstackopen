@@ -11,13 +11,13 @@ function parseBmiArguments(args: string[]): BmiValues {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
 }
 
-function calculateBmi(height: number, weight: number): string {
+export function calculateBmi(height: number, weight: number): string {
   const bmi = weight / ((height / 100) * (height / 100));
 
   if (bmi < 16) {
@@ -39,13 +39,15 @@ function calculateBmi(height: number, weight: number): string {
   }
 }
 
-try {
-  const { height, weight } = parseBmiArguments(process.argv);
-  console.log(calculateBmi(height, weight));
-} catch (error: unknown) {
-  if (error instanceof Error) {
-    console.error(error.message);
-  } else {
-    console.error("Something bad happened.");
+if (require.main === module) {
+  try {
+    const { height, weight } = parseBmiArguments(process.argv);
+    console.log(calculateBmi(height, weight));
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Something bad happened.");
+    }
   }
 }

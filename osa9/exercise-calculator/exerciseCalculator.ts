@@ -24,7 +24,7 @@ function parseExerciseArguments(args: string[]): ExerciseValues {
     throw new Error('Provided target was not a number!');
   }
 
-  let hours: number[] = [];
+  const hours: number[] = [];
   for (let i = 3; i < args.length; i++) {
     const hour = Number(args[i]);
     if (isNaN(hour)) {
@@ -37,10 +37,10 @@ function parseExerciseArguments(args: string[]): ExerciseValues {
   return {
     hours,
     target
-  }
+  };
 }
 
-function calculateExercises(hours: number[], target: number): Result {
+export function calculateExercises(hours: number[], target: number): Result {
   const average = hours.reduce(((prev, curr) => prev + curr), 0) / hours.length;
 
   let rating: Rating = 3;
@@ -62,16 +62,18 @@ function calculateExercises(hours: number[], target: number): Result {
     ratingDescription,
     target,
     average,
-  }
+  };
 }
 
-try {
-  const { hours, target } = parseExerciseArguments(process.argv);
-  console.log(calculateExercises(hours, target));
-} catch (error: unknown) {
-  if (error instanceof Error) {
-    console.error(error.message);
-  } else {
-    console.error("Something bad happened.");
+if (require.main === module) {
+  try {
+    const { hours, target } = parseExerciseArguments(process.argv);
+    console.log(calculateExercises(hours, target));
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Something bad happened.");
+    }
   }
 }
