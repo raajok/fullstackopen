@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { NewPatient, NonSensitivePatient, Patient } from '../types';
-import { addPatient, getPatients } from '../services/patientService';
+import { addPatient, getPatient, getPatients } from '../services/patientService';
 import { newPatientSchema } from '../utils';
 import z from 'zod';
 
@@ -22,6 +22,16 @@ router.get('/', (_req, res: Response<NonSensitivePatient[]>) => {
 router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatient>, res: Response<Patient>) => {
   const addedPatient = addPatient(req.body);
   res.json(addedPatient);
+});
+
+router.get('/:id', (req, res: Response<NonSensitivePatient>) => {
+  const id = req.params.id;
+  const patient = getPatient(id);
+  if (patient) {
+    return res.send(patient);
+  } else {
+    throw new Error('Patient not found'); // error middleware should catch this
+  }
 });
 
 const errorMiddleware = (error: unknown, _req: Request, res: Response, next: NextFunction) => { 
