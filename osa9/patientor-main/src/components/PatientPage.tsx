@@ -33,7 +33,18 @@ export default function PatientPage() {
     <div>
       <h1>{patient.name} <GenderIcon gender={patient.gender} /></h1>
       {patient.ssn && <p>ssn: {patient.ssn}</p>}
-      {<p>occupation: {patient.occupation}</p>}
+      <p>occupation: {patient.occupation}</p>
+      <h2>entries</h2>
+      {patient.entries.map(entry => (
+        <div key={entry.id}>
+          <p>{entry.date} {entry.description}</p>
+          <ul>
+            {entry.diagnosisCodes?.map(code => (
+              <li key={code}>{code}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }

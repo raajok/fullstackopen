@@ -24,7 +24,7 @@ router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatient>, 
   res.json(addedPatient);
 });
 
-router.get('/:id', (req, res: Response<NonSensitivePatient>) => {
+router.get('/:id', (req, res: Response<Patient>) => {
   const id = req.params.id;
   const patient = getPatient(id);
   if (patient) {
